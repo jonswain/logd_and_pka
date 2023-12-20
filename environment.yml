@@ -1,0 +1,27 @@
+# conda env create --file environment.yml
+# mamba env create --file environment.yml
+name: logd_pka_calculator
+dependencies:
+  - datamol
+  - hyperopt
+  - ipykernel
+  - matplotlib
+  - molfeat
+  - numpy
+  - pandas
+  - pyprojroot
+  - python=3.10
+  - rdkit
+  - scikit-learn
+  - seaborn
+  - tqdm
+  # Development
+  - black
+  - ipykernel
+  - ipywidgets
+  - mypy
+  - ruff
+  - pip
+  - pip:
+    - chemprop
+    - git+https://github.com/bp-kelley/descriptastorus
