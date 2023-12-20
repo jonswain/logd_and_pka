@@ -62,7 +62,11 @@ target/
 .python-version
 
 # exclude data from source control by default
-/data/
+data/raw/*
+!data/raw/.gitkeep
+data/processed
+data/interim
+data/external
 
 # ipynb checkpoints
 .ipynb_checkpoints
