@@ -70,3 +70,9 @@ data/external
 
 # ipynb checkpoints
 .ipynb_checkpoints
+
+# Mypy
+.mypy_cache
+
+# Models
+models/

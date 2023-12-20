@@ -9,3 +9,4 @@ def set_up() -> None:
     os.makedirs(mdf("data/external")(), exist_ok=True)
     os.makedirs(mdf("data/interim")(), exist_ok=True)
     os.makedirs(mdf("data/processed")(), exist_ok=True)
+    os.makedirs(mdf("models")(), exist_ok=True)
