@@ -4,6 +4,7 @@ import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import PandasTools
 from sklearn.model_selection import GroupShuffleSplit
+from logd_pka_calculator.utils.paths import make_dir_function as mdf
 
 
 def load_logd_data(file_path) -> pd.DataFrame:
@@ -44,7 +45,7 @@ def train_test_split(data, train_frac=0.8) -> tuple[pd.DataFrame, pd.DataFrame]:
 def chemprop_singletask_data() -> None:
     """Puts data into correct shape to be used by chemprop"""
     for dataset in ["train", "test"]:
-        df = pd.read_csv(f"../data/processed/{dataset}_data.csv")
+        df = pd.read_csv(mdf(f"../data/processed/{dataset}_data.csv")())
         df[["SMILES", "logd_x"]].to_csv(
-            f"../data/processed/{dataset}_data_chemprop.csv", index=False
+            mdf(f"../data/processed/{dataset}_data_chemprop.csv")(), index=False
         )
