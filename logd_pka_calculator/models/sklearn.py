@@ -24,15 +24,15 @@ def regression_models(X_train, y_train, X_test, y_test) -> None:
         y_test (np.array): Test target
     """
     models = [
-        HistGradientBoostingRegressor,
-        ExtraTreesRegressor,
-        RandomForestRegressor,
-        GradientBoostingRegressor,
+        HistGradientBoostingRegressor(),
+        ExtraTreesRegressor(n_jobs=-1),
+        RandomForestRegressor(n_jobs=-1),
+        GradientBoostingRegressor(),
     ]
 
     preds = {}
     for model in models:
-        regressor = model()
+        regressor = model
         regressor.fit(X_train, y_train)
         y_preds = regressor.predict(X_test)
         preds[type(regressor).__name__] = y_preds
