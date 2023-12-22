@@ -20,6 +20,7 @@ def load_logd_data(file_path) -> pd.DataFrame:
     df["SMILES"] = df.ROMol.apply(Chem.MolToSmiles)
     PandasTools.AddMurckoToFrame(df)
     df = df[["ROMol", "SMILES", "Murcko_SMILES", "logd_x", "apka_x", "bpka_x"]]
+    df = df.drop_duplicates(subset="SMILES", keep="first")
     df.logd_x = df.logd_x.astype(float)
     return df
 
