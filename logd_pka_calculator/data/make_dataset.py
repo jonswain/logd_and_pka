@@ -19,9 +19,10 @@ def load_logd_data(file_path) -> pd.DataFrame:
     df = PandasTools.LoadSDF(file_path, molColName="ROMol").set_index("ID")
     df["SMILES"] = df.ROMol.apply(Chem.MolToSmiles)
     PandasTools.AddMurckoToFrame(df)
-    df = df[["ROMol", "SMILES", "Murcko_SMILES", "logd_x", "apka_x", "bpka_x"]]
+    print(df.columns)
+    df = df[["ROMol", "SMILES", "Murcko_SMILES", "logd", "apka", "bpka"]]
     df = df.drop_duplicates(subset="SMILES", keep="first")
-    df.logd_x = df.logd_x.astype(float)
+    df.logd = df.logd.astype(float)
     return df
 
 
@@ -47,7 +48,7 @@ def chemprop_singletask_data() -> None:
     """Puts data into correct shape to be used by chemprop"""
     for dataset in ["train", "test"]:
         df = pd.read_csv(mdf(f"data/processed/{dataset}_data.csv")())
-        df[["SMILES", "logd_x"]].to_csv(
+        df[["SMILES", "logd"]].to_csv(
             mdf(f"data/processed/{dataset}_data_chemprop.csv")(), index=False
         )
 
@@ -56,7 +57,7 @@ def chemprop_multitask_data() -> None:
     """Puts data into correct shape to be used by chemprop"""
     for dataset in ["train", "test"]:
         df = pd.read_csv(mdf(f"data/processed/{dataset}_data.csv")())
-        df[["SMILES", "logd_x", "apka_x", "bpka_x"]].to_csv(
+        df[["SMILES", "logd", "apka", "bpka"]].to_csv(
             mdf(f"data/processed/{dataset}_data_chemprop_multitask.csv")(),
             index=False,
         )
