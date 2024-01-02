@@ -25,3 +25,4 @@ dependencies:
   - pip:
     - chemprop
     - git+https://github.com/bp-kelley/descriptastorus
+    - umap-learn
