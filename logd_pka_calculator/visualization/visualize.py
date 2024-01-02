@@ -8,6 +8,7 @@ from sklearn import preprocessing
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+import umap
 
 sns.set_style("dark")
 
@@ -93,6 +94,40 @@ def pca_then_tsne(features, classes) -> None:
     sns.scatterplot(
         x=crds_embedded[:, 0],
         y=crds_embedded[:, 1],
+        hue=labels,
+        s=10,
+        alpha=0.5,
+        ax=axis,
+        palette=["green", "orange"],
+    )
+    plt.show()
+
+
+def umap_visualisation(features: list[pd.DataFrame], classes: list[str]) -> None:
+    """Uses UMAP to reduce the features to two dimensions.
+    Plots all data points and highlights according to data type
+
+    Args:
+        features (list[pd.DataFrame]): A list of features for each class
+        classes (list[str]): A list of classes for labelling
+    """
+    combined_features = pd.concat(features)
+    scaler = preprocessing.StandardScaler().fit(combined_features)
+    scaled = scaler.transform(combined_features)
+
+    reducer = umap.UMAP(n_components=2, n_neighbors=20, min_dist=0.1, metric="jaccard")
+    crds = reducer.fit_transform(scaled)
+    labels = []
+    for i, feature in enumerate(features):
+        try:
+            labels += [classes[i]] * len(feature)
+        except IndexError:
+            labels += ["Unknown"] * len(feature)
+
+    _, axis = plt.subplots(nrows=1, ncols=1, figsize=(7, 6))
+    sns.scatterplot(
+        x=crds[:, 0],
+        y=crds[:, 1],
         hue=labels,
         s=10,
         alpha=0.5,
